@@ -4,7 +4,7 @@ import (
 	"fmt"
 	//"sort"
 	//"reflect"
-	"strconv"
+	//"strconv"
 )
 
 func main() {
@@ -198,15 +198,21 @@ func main() {
 
 	// STRINGS
 	
-	var price string = "$48.95"
-	var currency byte = price[0]
-	var amountString string = price[1:]
-	amount, parseErr := strconv.ParseFloat(amountString, 64)
-	fmt.Println("Currency:", currency)
-	if parseErr == nil {
-		fmt.Println("Amount:", amount)
-	} else {
-		fmt.Println("Error:", parseErr)
+	// var price string = "$48.95"
+	// //var currency byte = price[0]
+	// var currency string = string(price[0])
+	// var amountString string = price[1:]
+	// amount, parseErr := strconv.ParseFloat(amountString, 64)
+	// fmt.Println("Currency:", currency)
+	// if parseErr == nil {
+	// 	fmt.Println("Amount:", amount)
+	// } else {
+	// 	fmt.Println("Error:", parseErr)
+	// }
+
+	var price = "$48.95"
+	for index, char := range price {
+		fmt.Println(index, char, string(char))
 	}
 
 }
