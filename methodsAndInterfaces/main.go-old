@@ -1,0 +1,89 @@
+package main
+
+import (
+	"fmt"
+)
+
+type Product struct{
+	name, category string
+	price float64
+}
+// Defining a type of alias
+type ProductList [] Product
+
+type Supplier struct {
+	name, city string
+}
+
+func main() {
+	
+	// products := [] *Product {
+	// 	{"Kayak", "Watersports", 275},
+	// 	{"Lifejacket", "Watersports", 48.95},
+	// 	{"Soccer Ball", "Soccer", 19.50},
+	// }
+	// for _, p := range products {
+	// 	// printDetails(p) // function call
+	// 	p.printDetails() // mehtod call
+	// }
+
+	// suppliers := [] *Supplier {
+	// 	{"Acme Co", "New York City"},
+	// 	{"BoatCo", "Chicago"},
+	// }
+	// for _,s := range suppliers {
+	// 	s.printDetails()
+	// }
+	
+	// Understanding Pointer and Value Receivers
+	// kayak := Product{"Kayak", "Watersports", 275}
+	// kayak.printDetails()
+
+	// kayak := &Product{"Kayak", "Watersports", 275}
+	// kayak.printDetails()
+
+	// Using defined type aliases
+	products := ProductList {
+		{"Kayak", "Watersports", 275},
+		{"Lifejacket", "Watersports", 48.95},
+		{"Soccer Ball", "Soccer", 19.50},
+	}
+
+	for category, total := range products.calcCategoryTotals() {
+		fmt.Println("Category:", category, "Total:", total)
+	}
+}
+
+// Defining methods for type aliases
+func (products *ProductList) calcCategoryTotals() map[string]float64 {
+	totals := make(map[string]float64)
+	for _,p := range *products {
+		totals[p.category] = totals[p.category] + p.price
+	}
+	return totals
+}
+
+// Method defined
+func (product *Product) printDetails(){
+	prodTax := product.calcTax(0.2, 100)
+	fmt.Println("Name:", product.name, "Category:", product.category, "Price", prodTax)
+}
+
+// Method parameters and results
+func (product *Product) calcTax(rate, threshold float64) float64 {
+	if product.price > threshold {
+		return product.price + (product.price * rate)
+	}
+	return product.price
+}
+
+// Method Overloading -- Go does not support this feature. 
+// Method name and receiver type must be unique regardless of parameters that are defined
+func (supplier *Supplier) printDetails() {
+	fmt.Println("Supplier:", supplier.name, "City:", supplier.city)
+}
+
+// Regular function defined
+// func printDetails(product *Product) {
+// 	fmt.Println("Name:", product.name, "Category:", product.category, "Price", product.price)
+// }
